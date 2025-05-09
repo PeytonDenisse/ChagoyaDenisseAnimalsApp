@@ -57,6 +57,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    /*las primeras dos son para hacer la peticion a la api */
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("io.coil-kt.coil3:coil-compose:3.1.0")
@@ -66,3 +67,4 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 }
+
