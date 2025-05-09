@@ -26,6 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.chogoyadenisseanimalsapp.screens.AnimalsScreen
+import com.example.chogoyadenisseanimalsapp.screens.HabitsScreen
 import com.example.chogoyadenisseanimalsapp.ui.theme.ChogoyaDenisseAnimalsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,6 +43,7 @@ class MainActivity : ComponentActivity() {
                 var selectedScreen by remember {
                     mutableStateOf("animal")
                 }
+                val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                         .background(Color(0xFF0D0D2B)),
@@ -53,6 +59,7 @@ class MainActivity : ComponentActivity() {
                                 selected = selectedScreen == "animals",
                                 onClick = {
                                     selectedScreen = "animals"
+                                    navController.navigate("animals")
                                 },
                                 icon = {
                                     Icon(
@@ -69,6 +76,8 @@ class MainActivity : ComponentActivity() {
                                 selected = selectedScreen == "habits",
                                 onClick = {
                                     selectedScreen = "habits"
+                                    navController.navigate("habits")
+
                                 },
                                 icon = {
                                     Icon(
@@ -84,28 +93,17 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     ) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    NavHost(navController = navController, startDestination = "animals"){
+                        composable(route = "animals") {
+                            AnimalsScreen(innerPadding = innerPadding)
+                        }
+                        composable(route = "habits") {
+                            HabitsScreen(innerPadding = innerPadding)
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChogoyaDenisseAnimalsAppTheme {
-        Greeting("Android")
-    }
-}
