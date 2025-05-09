@@ -14,9 +14,14 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,8 +32,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             ChogoyaDenisseAnimalsAppTheme {
+                var selectedScreen by remember {
+                    mutableStateOf("animal")
+                }
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                         .background(Color(0xFF0D0D2B)),
@@ -36,10 +45,15 @@ class MainActivity : ComponentActivity() {
                     containerColor = Color.Transparent,
 
                     bottomBar = {
-                        NavigationBar {
+                        NavigationBar(
+                            containerColor = Color(0xFF0D0D2B).copy(alpha = 0.9f)
+
+                        ) {
                             NavigationBarItem(
-                                selected = true,
-                                onClick = { },
+                                selected = selectedScreen == "animals",
+                                onClick = {
+                                    selectedScreen = "animals"
+                                },
                                 icon = {
                                     Icon(
                                         imageVector = Icons.Default.Home,
@@ -48,11 +62,14 @@ class MainActivity : ComponentActivity() {
                                         modifier = Modifier.size(30.dp)
                                     )
 
-                                }
+                                },
+                                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.White.copy(alpha = 0.2f))
                             )
                             NavigationBarItem(
-                                selected = true,
-                                onClick = { },
+                                selected = selectedScreen == "habits",
+                                onClick = {
+                                    selectedScreen = "habits"
+                                },
                                 icon = {
                                     Icon(
                                         imageVector = Icons.Default.List,
@@ -61,7 +78,8 @@ class MainActivity : ComponentActivity() {
                                         modifier = Modifier.size(30.dp)
                                     )
 
-                                }
+                                },
+                                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.White.copy(alpha = 0.2f))
                             )
                         }
                     }
