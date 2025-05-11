@@ -9,3 +9,5 @@ data class Animal(
     val imageGallery: List<String>,
     val name: String
 )
+
+
