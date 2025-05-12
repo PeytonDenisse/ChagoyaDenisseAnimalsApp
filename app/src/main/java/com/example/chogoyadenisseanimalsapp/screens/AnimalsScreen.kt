@@ -2,7 +2,8 @@ package com.example.chogoyadenisseanimalsapp.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -31,7 +32,7 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Encabezado: título + botón decorativo
+            // Encabezado
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -45,7 +46,7 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
                 )
 
                 Button(
-                    onClick = {  },
+                    onClick = { /* decorativo */ },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFDFD96),
                         contentColor = Color.Black
@@ -73,20 +74,21 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Lista futura de animales
-            LazyColumn(
+            // Grid vacío (esperando datos reales más adelante)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(bottom = 100.dp)
             ) {
-                // Aquí se insertarán los items más adelante
+                // Aquí se agregarán los items con datos reales
             }
         }
     }
 }
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun AnimalsScreenPreview() {
     AnimalsScreen(innerPadding = PaddingValues())

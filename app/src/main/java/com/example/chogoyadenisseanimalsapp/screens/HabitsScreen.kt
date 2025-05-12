@@ -2,7 +2,8 @@ package com.example.chogoyadenisseanimalsapp.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +29,7 @@ fun HabitsScreen(innerPadding: PaddingValues) {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-
+            // Título
             Text(
                 text = "Ambientes",
                 color = Color.White,
@@ -38,7 +39,7 @@ fun HabitsScreen(innerPadding: PaddingValues) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-
+            // Subtítulo
             Text(
                 text = "Explora los diferentes hábitats del mundo",
                 color = Color.White.copy(alpha = 0.85f),
@@ -49,21 +50,21 @@ fun HabitsScreen(innerPadding: PaddingValues) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Lista futura de ambientes
-            LazyColumn(
+            // Grid de ambientes (esperando datos reales)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(bottom = 100.dp)
             ) {
-                // Aquí irán los items de ambiente más adelante
+                // Aquí se agregarán los EnvironmentItemCard con datos reales
             }
         }
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun HabitsScreenPreview() {
     HabitsScreen(innerPadding = PaddingValues())
