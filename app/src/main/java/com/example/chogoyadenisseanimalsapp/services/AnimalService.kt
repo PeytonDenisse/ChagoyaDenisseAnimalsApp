@@ -12,7 +12,9 @@ interface AnimalService {
     suspend fun getAnimals(): List<Animal>
 
     @GET("animals")
-    suspend fun getAnimalsByEnvironment(@Query("enviromentId") envId: String): List<Animal>
+    suspend fun getAnimalsByEnvironment(@Query("environmentId") environmentId: String): List<Animal>
+
+
 
     @GET("animals/{id}")
     suspend fun getAnimalById(@Path("id") id: String): Animal

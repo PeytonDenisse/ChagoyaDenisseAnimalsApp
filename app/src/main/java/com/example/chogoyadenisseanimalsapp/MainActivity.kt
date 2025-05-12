@@ -16,9 +16,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import androidx.navigation.navArgument
 import com.example.chogoyadenisseanimalsapp.screens.AnimalDetailScreen
 import com.example.chogoyadenisseanimalsapp.screens.AnimalsScreen
+import com.example.chogoyadenisseanimalsapp.screens.HabitsDetailScreen
 import com.example.chogoyadenisseanimalsapp.screens.HabitsScreen
 import com.example.chogoyadenisseanimalsapp.ui.theme.ChogoyaDenisseAnimalsAppTheme
 
@@ -86,11 +89,18 @@ class MainActivity : ComponentActivity() {
                             AnimalsScreen(innerPadding = innerPadding, navController = navController)
                         }
                         composable(route = "habits") {
-                            HabitsScreen(innerPadding = innerPadding)
+                            HabitsScreen(innerPadding = innerPadding, navController = navController)
                         }
                         composable(route = "animal_detail/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id") ?: ""
                             AnimalDetailScreen(id = id)
+                        }
+                        composable(
+                            route = "environment_detail/{id}",
+                            arguments = listOf(navArgument("id") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            val id = backStackEntry.arguments?.getString("id") ?: ""
+                            HabitsDetailScreen(id = id)
                         }
                     }
                 }

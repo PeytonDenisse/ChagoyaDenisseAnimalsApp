@@ -1,5 +1,6 @@
 package com.example.chogoyadenisseanimalsapp.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -19,12 +20,14 @@ import coil3.compose.AsyncImage
 fun EnvironmentItemCard(
     name: String,
     imageUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     Surface(
         modifier = modifier
             .width(160.dp)
-            .height(180.dp),
+            .height(180.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(20.dp),
         color = Color.White,
         shadowElevation = 2.dp
@@ -65,6 +68,8 @@ fun EnvironmentItemCard(
 fun EnvironmentItemCardPreview() {
     EnvironmentItemCard(
         name = "Selva Tropical",
-        imageUrl = "https://images.pexels.com/photos/19678111/pexels-photo-19678111/free-photo-of-paisaje-bosque-naturaleza-selva.jpeg"
+        imageUrl = "https://images.pexels.com/photos/19678111/pexels-photo-19678111/free-photo-of-paisaje-bosque-naturaleza-selva.jpeg",
+        onClick = {}
     )
 }
+

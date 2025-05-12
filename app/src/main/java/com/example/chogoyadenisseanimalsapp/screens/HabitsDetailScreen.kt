@@ -1,31 +1,110 @@
 package com.example.chogoyadenisseanimalsapp.screens
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import com.example.chogoyadenisseanimalsapp.components.AnimalItemCard
+import com.example.chogoyadenisseanimalsapp.models.Animal
+import com.example.chogoyadenisseanimalsapp.models.Environment
+import com.example.chogoyadenisseanimalsapp.services.AnimalService
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 @Composable
 fun HabitsDetailScreen(id: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF0D0D2B))
-            .padding(24.dp)
-    ) {
-        Text(
-            text = "Detalle del Animal",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "ID del animal: $id",
-            color = Color.White
-        )
+    var environment by remember { mutableStateOf<Environment?>(null) }
+    var animals by remember { mutableStateOf<List<Animal>>(emptyList()) }
+    val scope = rememberCoroutineScope()
+    val BASE_URL = "https://animals.juanfrausto.com/api/"
+
+    LaunchedEffect(id) {
+        scope.launch {
+            try {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                val api = retrofit.create(AnimalService::class.java)
+                environment = api.getEnvironmentById(id)
+                animals = api.getAnimalsByEnvironment(id)
+            } catch (e: Exception) {
+                Log.e("HabitsDetailScreen", "Error al cargar datos del ambiente", e)
+            }
+        }
+    }
+
+    environment?.let { env ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AsyncImage(
+                model = env.image,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .clip(MaterialTheme.shapes.medium)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = env.name,
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFFF9800)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = env.description,
+                fontSize = 16.sp,
+                color = Color.DarkGray
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Animales en este hábitat",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2196F3),
+                modifier = Modifier.align(Alignment.Start)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                animals.forEach { animal ->
+                    AnimalItemCard(
+                        name = animal.name,
+                        imageUrl = animal.image
+                    )
+                }
+            }
+        }
     }
 }

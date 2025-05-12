@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.chogoyadenisseanimalsapp.components.EnvironmentItemCard
 import com.example.chogoyadenisseanimalsapp.models.Environment
 import com.example.chogoyadenisseanimalsapp.services.AnimalService
@@ -28,7 +30,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 @Composable
-fun HabitsScreen(innerPadding: PaddingValues) {
+fun HabitsScreen(
+    innerPadding: PaddingValues,
+    navController: NavHostController
+) {
     var environments by remember { mutableStateOf<List<Environment>>(emptyList()) }
     val scope = rememberCoroutineScope()
     val BASE_URL = "https://animals.juanfrausto.com/api/"
@@ -57,7 +62,6 @@ fun HabitsScreen(innerPadding: PaddingValues) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Título
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,7 +75,7 @@ fun HabitsScreen(innerPadding: PaddingValues) {
             )
 
             Button(
-                onClick = {  },
+                onClick = { },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFDFD96),
                     contentColor = Color.Black
@@ -89,7 +93,6 @@ fun HabitsScreen(innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Subtítulo
         Text(
             text = "Explora los diferentes hábitats del mundo",
             color = Color.White.copy(alpha = 0.85f),
@@ -100,7 +103,6 @@ fun HabitsScreen(innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Cuadrícula de ambientes
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
@@ -109,7 +111,13 @@ fun HabitsScreen(innerPadding: PaddingValues) {
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             items(environments) { env ->
-                EnvironmentItemCard(name = env.name, imageUrl = env.image)
+                EnvironmentItemCard(
+                    name = env.name,
+                    imageUrl = env.image,
+                    onClick = {
+                        navController.navigate("environment_detail/${env.id}")
+                    }
+                )
             }
         }
     }
@@ -118,5 +126,5 @@ fun HabitsScreen(innerPadding: PaddingValues) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun HabitsScreenPreview() {
-    HabitsScreen(innerPadding = PaddingValues())
+    HabitsScreen(innerPadding = PaddingValues(), navController = rememberNavController())
 }
