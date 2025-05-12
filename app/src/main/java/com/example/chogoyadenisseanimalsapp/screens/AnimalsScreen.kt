@@ -2,6 +2,7 @@ package com.example.chogoyadenisseanimalsapp.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import androidx.navigation.NavHostController
 import com.example.chogoyadenisseanimalsapp.components.AnimalItemCard
 import com.example.chogoyadenisseanimalsapp.models.Animal
 import com.example.chogoyadenisseanimalsapp.services.AnimalService
@@ -27,12 +28,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun AnimalsScreen(innerPadding: PaddingValues) {
+fun AnimalsScreen(innerPadding: PaddingValues, navController: NavHostController) {
     var animals by remember { mutableStateOf<List<Animal>>(emptyList()) }
     val scope = rememberCoroutineScope()
     val BASE_URL = "https://animals.juanfrausto.com/api/"
 
-    // Llamada a la API como en tu HomeScreen
     LaunchedEffect(key1 = true) {
         scope.launch {
             try {
@@ -48,7 +48,6 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
         }
     }
 
-    // UI principal
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +57,6 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Encabezado
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,7 +68,6 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
-
             Button(
                 onClick = { /* decorativo */ },
                 colors = ButtonDefaults.buttonColors(
@@ -79,10 +76,7 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
                 ),
                 shape = RoundedCornerShape(20.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Agregar"
-                )
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar")
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Agregar")
             }
@@ -90,7 +84,6 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Subtítulo
         Text(
             text = "Conoce a los animales más increíbles del mundo",
             color = Color.White.copy(alpha = 0.85f),
@@ -101,7 +94,6 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Cuadrícula de animales
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
@@ -110,14 +102,15 @@ fun AnimalsScreen(innerPadding: PaddingValues) {
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             items(animals) { animal ->
-                AnimalItemCard(name = animal.name, imageUrl = animal.image)
+                AnimalItemCard(
+                    name = animal.name,
+                    imageUrl = animal.image,
+                    modifier = Modifier.clickable {
+                        navController.navigate("animal_detail/${animal.id}")
+                    }
+                )
             }
         }
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun AnimalsScreenPreview() {
-    AnimalsScreen(innerPadding = PaddingValues())
-}
