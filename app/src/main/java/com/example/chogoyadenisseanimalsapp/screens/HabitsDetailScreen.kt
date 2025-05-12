@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AnimalDetailScreen(id: String) {
+fun HabitsDetailScreen(id: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
