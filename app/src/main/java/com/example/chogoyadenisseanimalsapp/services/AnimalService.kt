@@ -17,10 +17,12 @@ interface AnimalService {
     @GET("animals/{id}")
     suspend fun getAnimalById(@Path("id") id: String): Animal
 
-    //
-    @GET("enviroment")
+
+    @GET("environments") // Antes estaba como "enviroment"
     suspend fun getEnvironments(): List<Environment>
 
-    @GET("enviroment/{id}")
+
+    @GET("environments/{id}")
     suspend fun getEnvironmentById(@Path("id") id: String): Environment
+
 }

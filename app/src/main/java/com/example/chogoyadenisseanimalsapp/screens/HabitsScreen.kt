@@ -20,28 +20,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.chogoyadenisseanimalsapp.components.EnvironmentItemCard
 import com.example.chogoyadenisseanimalsapp.models.Environment
-import com.example.chogoyadenisseanimalsapp.models.mockEnvironments
-// import com.example.chogoyadenisseanimalsapp.services.AnimalService
-// import kotlinx.coroutines.launch
-// import retrofit2.Retrofit
-// import retrofit2.converter.gson.GsonConverterFactory
+import com.example.chogoyadenisseanimalsapp.services.AnimalService
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+
 
 @Composable
 fun HabitsScreen(innerPadding: PaddingValues) {
     var environments by remember { mutableStateOf<List<Environment>>(emptyList()) }
-
-    // CARGA TEMPORAL MOCK
-    LaunchedEffect(Unit) {
-        environments = mockEnvironments
-    }
-
-    /*
-     CÓDIGO ORIGINAL PARA USAR LA API REAL
-
     val scope = rememberCoroutineScope()
     val BASE_URL = "https://animals.juanfrausto.com/api/"
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(Unit) {
         scope.launch {
             try {
                 val retrofit = Retrofit.Builder()
@@ -55,9 +47,7 @@ fun HabitsScreen(innerPadding: PaddingValues) {
             }
         }
     }
-    */
 
-    // UI principal
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +71,7 @@ fun HabitsScreen(innerPadding: PaddingValues) {
             )
 
             Button(
-                onClick = { /* decorativo */ },
+                onClick = {  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFDFD96),
                     contentColor = Color.Black
