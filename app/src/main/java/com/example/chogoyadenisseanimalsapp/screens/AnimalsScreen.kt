@@ -69,7 +69,7 @@ fun AnimalsScreen(innerPadding: PaddingValues, navController: NavHostController)
                 fontWeight = FontWeight.Bold
             )
             Button(
-                onClick = { /* decorativo */ },
+                onClick = {  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFDFD96),
                     contentColor = Color.Black

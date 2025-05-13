@@ -1,6 +1,7 @@
 package com.example.chogoyadenisseanimalsapp.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 @Composable
-fun HabitsDetailScreen(id: String) {
+fun HabitsDetailScreen(id: String, innerPadding: PaddingValues) {
     var environment by remember { mutableStateOf<Environment?>(null) }
     var animals by remember { mutableStateOf<List<Animal>>(emptyList()) }
     val scope = rememberCoroutineScope()
@@ -50,61 +51,84 @@ fun HabitsDetailScreen(id: String) {
     environment?.let { env ->
         Column(
             modifier = Modifier
+                .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(Color(0xFFFFA726))
         ) {
-            AsyncImage(
-                model = env.image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
+
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(MaterialTheme.shapes.medium)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = env.name,
-                fontSize = 26.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFFF9800)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = env.description,
-                fontSize = 16.sp,
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = "Animales en este hábitat",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF2196F3),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
-
+                    .height(300.dp),
+                contentAlignment = Alignment.Center
             ) {
-                animals.forEach { animal ->
-                    AnimalItemCard(
-                        name = animal.name,
-                        imageUrl = animal.image
+                AsyncImage(
+                    model = env.image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                )
+            }
+
+
+
+            Card(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(y = (-24).dp)
+                    .clip(MaterialTheme.shapes.large)
+                    .padding(horizontal = 16.dp),
+                shape = MaterialTheme.shapes.large,
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = env.name,
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFFF9800)
                     )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = env.description,
+                        fontSize = 16.sp,
+                        color = Color.DarkGray
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Text(
+                        text = "Animales en este hábitat",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF2196F3),
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        animals.forEach { animal ->
+                            AnimalItemCard(
+                                name = animal.name,
+                                imageUrl = animal.image
+                            )
+                        }
+                    }
                 }
             }
         }

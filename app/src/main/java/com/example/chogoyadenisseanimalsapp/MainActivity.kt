@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -15,6 +17,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -24,6 +27,10 @@ import com.example.chogoyadenisseanimalsapp.screens.AnimalsScreen
 import com.example.chogoyadenisseanimalsapp.screens.HabitsDetailScreen
 import com.example.chogoyadenisseanimalsapp.screens.HabitsScreen
 import com.example.chogoyadenisseanimalsapp.ui.theme.ChogoyaDenisseAnimalsAppTheme
+import com.example.chogoyadenisseanimalsapp.utils.undefined
+import com.example.chogoyadenisseanimalsapp.utils.undefined2
+import com.example.chogoyadenisseanimalsapp.utils.undefined3
+import com.example.chogoyadenisseanimalsapp.utils.undefined4
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +50,8 @@ class MainActivity : ComponentActivity() {
                     containerColor = Color.Transparent,
                     bottomBar = {
                         NavigationBar(
-                            containerColor = Color(0xFF0D0D2B).copy(alpha = 0.9f)
+                            containerColor = Color(0xFF0D0D2B).copy(alpha = 0.9f),
+                            modifier = Modifier.height(45.dp)
                         ) {
                             NavigationBarItem(
                                 selected = selectedScreen == "animals",
@@ -53,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                 },
                                 icon = {
                                     Icon(
-                                        imageVector = Icons.Default.Home,
+                                        imageVector = undefined4,
                                         contentDescription = "Animales",
                                         tint = Color.White,
                                         modifier = Modifier.size(30.dp)
@@ -71,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                 },
                                 icon = {
                                     Icon(
-                                        imageVector = Icons.Default.List,
+                                        imageVector = undefined3,
                                         contentDescription = "Hábitats",
                                         tint = Color.White,
                                         modifier = Modifier.size(30.dp)
@@ -93,18 +101,27 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "animal_detail/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id") ?: ""
-                            AnimalDetailScreen(id = id)
+                            AnimalDetailScreen(id = id, innerPadding = innerPadding)
+
                         }
                         composable(
                             route = "environment_detail/{id}",
                             arguments = listOf(navArgument("id") { type = NavType.StringType })
                         ) { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id") ?: ""
-                            HabitsDetailScreen(id = id)
+                            HabitsDetailScreen(id = id, innerPadding = innerPadding)
+
                         }
                     }
                 }
             }
         }
     }
+}
+
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun MainActivityPreview() {
+    MainActivity()
 }

@@ -1,6 +1,7 @@
 package com.example.chogoyadenisseanimalsapp.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -28,7 +29,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun AnimalDetailScreen(id: String) {
+
+fun AnimalDetailScreen(id: String, innerPadding: PaddingValues) {
     var animal by remember { mutableStateOf<Animal?>(null) }
     val scope = rememberCoroutineScope()
     val BASE_URL = "https://animals.juanfrausto.com/api/"
@@ -49,13 +51,16 @@ fun AnimalDetailScreen(id: String) {
     }
 
     animal?.let { animal ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                .background(Color(0xFFFFA726))
+        )
+        {
+
             AsyncImage(
                 model = animal.image,
                 contentDescription = null,
@@ -63,19 +68,21 @@ fun AnimalDetailScreen(id: String) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
-                    .clip(MaterialTheme.shapes.medium)
             )
 
 
-
-
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.large,
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding) // 👈 solo aquí
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.large,
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -155,4 +162,6 @@ fun AnimalDetailScreen(id: String) {
             }
         }
     }
+    Spacer(modifier = Modifier.height(200.dp))
 }
+    }
