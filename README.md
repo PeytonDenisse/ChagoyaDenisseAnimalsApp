@@ -1,6 +1,31 @@
 # 🐾 ChogoyaDenisseAnimalsApp
+Denisse Chogoya
+5° Semestre – ISSC
+Desarrollo de Aplicaciones Móviles
 
 Aplicación Android construida con **Jetpack Compose** para visualizar animales y sus hábitats a través del consumo de una API REST.
+
+
+## 🚀 Cómo ejecutar el proyecto
+1. Clona el repositorio:
+-- git clone https://github.com/tu_usuario/ChogoyaDenisseAnimalsApp.git
+2. Abre el proyecto en Android Studio.
+3. Ejecuta en un emulador o dispositivo Android.
+
+
+## 🌐 API utilizada
+
+**Base URL:** `https://animals.juanfrausto.com/api/`
+
+| Endpoint                         | Uso                                              |
+|----------------------------------|--------------------------------------------------|
+| `/animals`                      | Obtener lista completa de animales               |
+| `/animals/{id}`                | Obtener detalles de un animal                    |
+| `/animals?enviromentId={id}`   | Animales que viven en un hábitat específico      |
+| `/environments`                | Lista de hábitats                                |
+| `/environments/{id}`           | Detalles de un hábitat específico                |
+
+
 
 
 ## 📌 Funcionalidades principales
@@ -57,6 +82,9 @@ Ruta: `"environment_detail/{id}"`
 
 ---
 
+
+
+
 ## 🔀 Navegación
 
 La navegación está implementada con **Navigation Compose**, mediante un `NavHost` central con las siguientes rutas:
@@ -68,8 +96,23 @@ NavHost(navController, startDestination = "animals") {
     composable("animal_detail/{id}") { ... }
     composable("environment_detail/{id}") { ... }
 }
+```
 
+## 📦 Estructura del Proyecto
 
+ChogoyaDenisseAnimalsApp/
+
+┣ 📁 components/ → Tarjetas y componentes reutilizables
+
+┣ 📁 models/ → Clases de datos: Animal, Environment
+
+┣ 📁 screens/ → Todas las pantallas principales
+
+┣ 📁 services/ → Retrofit + Endpoints API
+
+┣ 📄 MainActivity.kt → Configuración de Scaffold y navegación
+
+┗ 📄 README.md → Este documento
 
 
 
