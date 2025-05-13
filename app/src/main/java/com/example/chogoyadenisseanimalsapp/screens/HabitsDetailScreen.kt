@@ -79,7 +79,7 @@ fun HabitsDetailScreen(id: String) {
             Text(
                 text = env.description,
                 fontSize = 16.sp,
-                color = Color.DarkGray
+                color = Color.White
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -89,14 +89,16 @@ fun HabitsDetailScreen(id: String) {
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF2196F3),
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
+
             ) {
                 animals.forEach { animal ->
                     AnimalItemCard(

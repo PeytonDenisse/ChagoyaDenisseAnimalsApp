@@ -3,6 +3,9 @@ package com.example.chogoyadenisseanimalsapp.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,30 +25,31 @@ fun AnimalItemCard(
     imageUrl: String,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Box(
         modifier = modifier
             .width(160.dp)
-            .wrapContentHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .height(160.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.White)
+            .padding(12.dp)
     ) {
-        // Imagen cuadrada y recortada
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = name,
+        Column(
             modifier = Modifier
-                .size(160.dp)
-                .clip(RoundedCornerShape(16.dp)),
-            contentScale = ContentScale.Crop
-        )
-
-        // Caja blanca con nombre
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White, RoundedCornerShape(16.dp))
-                .padding(vertical = 8.dp),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Imagen redonda
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = name,
+                modifier = Modifier
+                    .size(110.dp)
+                    .clip(RoundedCornerShape(50)),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = name,
                 style = MaterialTheme.typography.bodyMedium,
@@ -53,8 +57,19 @@ fun AnimalItemCard(
                 textAlign = TextAlign.Center
             )
         }
+
+        // Ícono de favorito (decorativo)
+        Icon(
+            imageVector = Icons.Outlined.FavoriteBorder,
+            contentDescription = "Favorito",
+            tint = Color.Gray,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .size(20.dp)
+        )
     }
 }
+
 
 
 @Preview(showBackground = false)

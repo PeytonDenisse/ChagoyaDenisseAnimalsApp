@@ -42,7 +42,7 @@ fun EnvironmentItemCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(135.dp)
-                    .clip(RoundedCornerShape(20.dp)),
+                    .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
                 contentScale = ContentScale.Crop
             )
 
@@ -63,7 +63,7 @@ fun EnvironmentItemCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun EnvironmentItemCardPreview() {
     EnvironmentItemCard(
